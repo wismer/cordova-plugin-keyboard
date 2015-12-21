@@ -43,7 +43,6 @@ Keyboard.prototype.disableScrollingInShrinkView = function(disable) {
 Keyboard.prototype.fireOnShow = function() {
     this.isVisible = true;
     cordova.fireWindowEvent('keyboardDidShow');
-    this.show();
     if(this.onshow) {
     	this.onshow();
     }
@@ -52,7 +51,6 @@ Keyboard.prototype.fireOnShow = function() {
 Keyboard.prototype.fireOnHide = function() {
     this.isVisible = false;
     cordova.fireWindowEvent('keyboardDidHide');
-    this.hide();
     if(this.onhide) {
     	this.onhide();
     }
