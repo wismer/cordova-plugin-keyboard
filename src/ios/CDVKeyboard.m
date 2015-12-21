@@ -66,27 +66,27 @@
                                             object:nil
                                              queue:[NSOperationQueue mainQueue]
                                         usingBlock:^(NSNotification* notification) {
-            [weakSelf.commandDelegate evalJs:@"Keyboard.fireOnShow();"];
+            [weakSelf.commandDelegate evalJs:@"keyboard = Keyboard.init(); keyboard.fireOnShow();"];
                                         }];
     _keyboardHideObserver = [nc addObserverForName:UIKeyboardDidHideNotification
                                             object:nil
                                              queue:[NSOperationQueue mainQueue]
                                         usingBlock:^(NSNotification* notification) {
-            [weakSelf.commandDelegate evalJs:@"Keyboard.fireOnHide();"];
+            [weakSelf.commandDelegate evalJs:@"keyboard = Keyboard.init(); keyboard.fireOnHide();"];
                                         }];
 
     _keyboardWillShowObserver = [nc addObserverForName:UIKeyboardWillShowNotification
                                                 object:nil
                                                  queue:[NSOperationQueue mainQueue]
                                             usingBlock:^(NSNotification* notification) {
-            [weakSelf.commandDelegate evalJs:@"Keyboard.fireOnShowing();"];
+            [weakSelf.commandDelegate evalJs:@"keyboard = Keyboard.init(); keyboard.fireOnShowing();"];
             weakSelf.keyboardIsVisible = YES;
                                             }];
     _keyboardWillHideObserver = [nc addObserverForName:UIKeyboardWillHideNotification
                                                 object:nil
                                                  queue:[NSOperationQueue mainQueue]
                                             usingBlock:^(NSNotification* notification) {
-            [weakSelf.commandDelegate evalJs:@"Keyboard.fireOnHiding();"];
+            [weakSelf.commandDelegate evalJs:@"keyboard = keyboard.init(); keyboard.fireOnHiding();"];
             weakSelf.keyboardIsVisible = NO;
                                             }];
 
