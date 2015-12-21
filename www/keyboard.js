@@ -22,73 +22,78 @@
 var argscheck = require('cordova/argscheck'),
     utils = require('cordova/utils'),
     exec = require('cordova/exec');
-   
+
 var Keyboard = function() {
+  this.isVisible = false;
+  this.automaticScrollToTopOnHiding = false;
 };
 
-Keyboard.shrinkView = function(shrink) {
+Keyboard.prototype.shrinkView = function(shrink) {
     exec(null, null, "Keyboard", "shrinkView", [shrink]);
 };
 
-Keyboard.hideFormAccessoryBar = function(hide) {
+Keyboard.prototype.hideFormAccessoryBar = function(hide) {
     exec(null, null, "Keyboard", "hideFormAccessoryBar", [hide]);
 };
 
-Keyboard.disableScrollingInShrinkView = function(disable) {
+Keyboard.prototype.disableScrollingInShrinkView = function(disable) {
     exec(null, null, "Keyboard", "disableScrollingInShrinkView", [disable]);
 };
 
-Keyboard.fireOnShow = function() {
-    Keyboard.isVisible = true;
+Keyboard.prototype.fireOnShow = function() {
+    this.isVisible = true;
     cordova.fireWindowEvent('keyboardDidShow');
 
-    if(Keyboard.onshow) {
-	Keyboard.onshow();
+    if(this.onshow) {
+    	this.onshow();
     }
 };
 
-Keyboard.fireOnHide = function() {
-    Keyboard.isVisible = false;
+Keyboard.prototype.fireOnHide = function() {
+    this.isVisible = false;
     cordova.fireWindowEvent('keyboardDidHide');
 
-    if(Keyboard.onhide) {
-	Keyboard.onhide();
+    if(this.onhide) {
+    	this.onhide();
     }
 };
 
-Keyboard.fireOnHiding = function() {
+Keyboard.prototype.fireOnHiding = function() {
     // Automatic scroll to the top of the page
     // to prevent quirks when using position:fixed elements
     // inside WebKit browsers (iOS specifically).
     // See CB-6444 for context.
-    if (Keyboard.automaticScrollToTopOnHiding) {
+    if (this.automaticScrollToTopOnHiding) {
         document.body.scrollLeft = 0;
     }
 
     cordova.fireWindowEvent('keyboardWillHide');
 
-    if(Keyboard.onhiding) {
-	Keyboard.onhiding();
+    if(this.onhiding) {
+    	this.onhiding();
     }
 };
 
-Keyboard.fireOnShowing = function() {
+Keyboard.prototype.fireOnShowing = function() {
     cordova.fireWindowEvent('keyboardWillShow');
 
-    if(Keyboard.onshowing) {
-	Keyboard.onshowing();
+    if(this.onshowing) {
+    	this.onshowing();
     }
 };
 
-Keyboard.show = function() {
+Keyboard.prototype.show = function() {
     exec(null, null, "Keyboard", "show", []);
 };
 
-Keyboard.hide = function() {
+Keyboard.prototype.hide = function() {
     exec(null, null, "Keyboard", "hide", []);
 };
 
-Keyboard.isVisible = false;
-Keyboard.automaticScrollToTopOnHiding = false;
+module.exports = {
+  init: function() {
+    return new Keyboard();
+  },
 
-module.exports = Keyboard;
+  Keyboard: Keyboard
+};
