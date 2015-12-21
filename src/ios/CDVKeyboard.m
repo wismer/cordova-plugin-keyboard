@@ -86,7 +86,7 @@
                                                 object:nil
                                                  queue:[NSOperationQueue mainQueue]
                                             usingBlock:^(NSNotification* notification) {
-            [weakSelf.commandDelegate evalJs:@"keyboard = keyboard.init(); keyboard.fireOnHiding();"];
+            [weakSelf.commandDelegate evalJs:@"keyboard = Keyboard.init(); keyboard.fireOnHiding();"];
             weakSelf.keyboardIsVisible = NO;
                                             }];
 
